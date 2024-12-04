@@ -2,22 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 //handコンポーネントの読み込み
 import Hand from "../../components/hand";
-export default class Index extends React.Component{
+//Enum型handTypeの読み込み
+import { HandType } from "../../interfaces/handType";
 
-  constructor() {
-    super();
+interface State {
+  selectHand: HandType;
+}
+
+export default class Index extends React.Component<{}, State> {
+
+  constructor(props: {}) {
+    super(props);
     this.state = {
-      selectHand: 0,
+      selectHand: HandType.Rock,
     };
   }
 
-  handleOnClick = (val) => {
+  handleOnClick = (val: HandType): void => {
     this.setState({selectHand: val});
   }
 
   render() {
-    // 追記
-    const handTypes = [0,1,2]
+    const handTypes: HandType[] = [HandType.Rock, HandType.Scissors, HandType.Paper];
     return (
       <div
         style={{
@@ -28,7 +34,7 @@ export default class Index extends React.Component{
       >
         <h1>じゃんけんページ</h1>
         <div style={{ display: "flex" }}>
-        {handTypes.map((handType) => (
+        {handTypes.map((handType: HandType) => (
             <Hand selectHand={handType} selectedHand={this.state.selectHand} clickHand={this.handleOnClick} />
           ))}
         </div>
